@@ -61,7 +61,9 @@ public final class Scenery {
      */
     public void addFloor()
     {
-        for (int i = 5; i < Angrywird.WORLD_WIDTH / BLOCK_SIZE; i++) {
+        addElement(new PhysicalObject(new Vector2(100,90),100,200,"slingshot1.png"));
+        for (int i = 40; i < Angrywird.WORLD_WIDTH / BLOCK_SIZE; i++) {
+
             addElement(new PhysicalObject(new Vector2(i * BLOCK_SIZE, Angrywird.FLOOR_HEIGHT), BLOCK_SIZE, BLOCK_SIZE, "block.png"));
         }
     }

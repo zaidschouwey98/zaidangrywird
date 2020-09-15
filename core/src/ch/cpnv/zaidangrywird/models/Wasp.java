@@ -11,6 +11,7 @@ public final class Wasp extends MovingObject {
     private static final int HEIGHT = 60;
 
     public Wasp(Vector2 position, Vector2 speed) {
+
         super(position, WIDTH, HEIGHT, PICNAME, speed);
     }
 

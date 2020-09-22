@@ -17,7 +17,7 @@ import ch.cpnv.zaidangrywird.Angrywird;
 
 public final class Scenery {
 
-    public static final int BLOCK_SIZE = 30;
+    public static final int BLOCK_SIZE = 60;
     private static final float X_MIN = 250;
     private static final float X_MAX = Angrywird.WORLD_WIDTH-150;
     private static final float Y_MAX = Angrywird.WORLD_HEIGHT * 0.75f;
@@ -63,9 +63,14 @@ public final class Scenery {
     {
         addElement(new PhysicalObject(new Vector2(100,90),100,200,"slingshot1.png"));
         for (int i = 40; i < Angrywird.WORLD_WIDTH / BLOCK_SIZE; i++) {
-
             addElement(new PhysicalObject(new Vector2(i * BLOCK_SIZE, Angrywird.FLOOR_HEIGHT), BLOCK_SIZE, BLOCK_SIZE, "block.png"));
         }
+    }
+    public void addPigs(){
+
+            Pig pig = new Pig(new Vector2(400,800),60,60,"pig.png");
+
+            addElement(pig);
     }
     /**
      * Render the whole scenary

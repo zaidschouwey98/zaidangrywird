@@ -46,7 +46,10 @@ public final class Bird extends MovingObject {
 
     public void drag(Vector2 position){
         if(state==BirdState.AIMING){
-            setPosition(position.x-dragOffset.x,position.y-dragOffset.y);
+
+                setPosition(position.x-dragOffset.x,position.y-dragOffset.y);
+
+
         }
     }
     public void launchFrom(Vector2 position){

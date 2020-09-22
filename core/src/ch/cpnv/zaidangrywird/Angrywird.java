@@ -4,14 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
-
-
-
-import java.time.Instant;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.util.Random;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -38,6 +30,8 @@ public class Angrywird extends ApplicationAdapter implements InputProcessor {
 	private SpriteBatch batch;
 	private Bird tweety;
 	private Wasp waspy;
+	private Pig pig;
+	private Vector2 touchOrigin;
 
 	private OrthographicCamera camera;
 
@@ -63,6 +57,9 @@ public class Angrywird extends ApplicationAdapter implements InputProcessor {
 
 		scene = new Scenery();
 
+		for (int i=0; i<5;i++){
+
+		}
 		for (int i=0; i<50; i++) {
 			try {
 				scene.dropElement(new PhysicalObject(new Vector2(rand.nextFloat()*WORLD_WIDTH, 0), BLOCK_SIZE, BLOCK_SIZE, "block.png"));
@@ -73,6 +70,7 @@ public class Angrywird extends ApplicationAdapter implements InputProcessor {
 			}
 		}
 		scene.addFloor();
+		scene.addPigs();
 
 
 		Gdx.input.setInputProcessor(this);
@@ -138,26 +136,30 @@ public class Angrywird extends ApplicationAdapter implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		Gdx.app.log("Angry","TouchDown");
 		Vector3 pointTouched = camera.unproject(new Vector3(screenX,screenY,0));
 		tweety.startAim(new Vector2(pointTouched.x,pointTouched.y));
+		touchOrigin = new Vector2(pointTouched.x,pointTouched.y);
 		return false;
 	}
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		Gdx.app.log("Angry","TouchUp");
+
 		Vector3 pointTouched = camera.unproject(new Vector3(screenX,screenY,0));
-		tweety.launchFrom(new Vector2(pointTouched.x,pointTouched.y));
+		if((pointTouched.x<touchOrigin.x)&&(pointTouched.y<touchOrigin.y))
+			tweety.launchFrom(new Vector2(pointTouched.x,pointTouched.y));
 		return false;
 	}
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer)
 	{
-		Gdx.app.log("Angry","TouchDragged");
-		Vector3 pointTouched = camera.unproject(new Vector3(screenX,screenY,0));
-		tweety.drag(new Vector2(pointTouched.x,pointTouched.y));
+
+		Vector3 pointTouched = camera.unproject(new Vector3(screenX, screenY, 0));
+		if((pointTouched.x<touchOrigin.x)&&(pointTouched.y<touchOrigin.y))
+			tweety.drag(new Vector2(pointTouched.x, pointTouched.y));
+
+
 		return false;
 	}
 
@@ -171,7 +173,10 @@ public class Angrywird extends ApplicationAdapter implements InputProcessor {
 
 		return false;
 	}
-
+	private Vector2 getAbsolutePosition(int x, int y) {
+		Vector3 pos = camera.unproject(new Vector3(x, y, 0));
+		return new Vector2(pos.x, pos.y);
+	}
 
 
 }

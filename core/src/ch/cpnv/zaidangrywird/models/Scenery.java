@@ -5,6 +5,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 
 import java.util.ArrayList;
 
@@ -61,6 +64,24 @@ public final class Scenery {
      */
     public void addFloor()
     {
+        // Create our body definition
+        BodyDef groundBodyDef = new BodyDef();
+        // Set its world position
+        groundBodyDef.position.set(new Vector2(0, 10));
+
+        // Create a body from the definition and add it to the world
+        Body groundBody = Angrywird.world.createBody(groundBodyDef);
+
+        // Create a polygon shape
+        PolygonShape groundBox = new PolygonShape();
+        // Set the polygon shape as a box which is twice the size of our view port and 20 high
+        // (setAsBox takes half-width and half-height as arguments)
+        groundBox.setAsBox(Angrywird.WORLD_WIDTH, 10.0f);
+        // Create a fixture from our polygon shape and add it to our ground body
+        groundBody.createFixture(groundBox, 0.0f);
+        // Clean up after ourselves
+        groundBox.dispose();
+
         addElement(new PhysicalObject(new Vector2(100,90),100,200,"slingshot1.png"));
         for (int i = 40; i < Angrywird.WORLD_WIDTH / BLOCK_SIZE; i++) {
             addElement(new PhysicalObject(new Vector2(i * BLOCK_SIZE, Angrywird.FLOOR_HEIGHT), BLOCK_SIZE, BLOCK_SIZE, "block.png"));

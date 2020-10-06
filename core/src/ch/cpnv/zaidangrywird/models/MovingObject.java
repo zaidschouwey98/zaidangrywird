@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 
 public abstract class MovingObject extends PhysicalObject {
-    protected final static float GRAVITY = -9.81f * 16 ;
+    protected final static float GRAVITY = -20f * 16 ;
     protected Vector2 speed;
 
     public MovingObject(Vector2 position, float width, float height, String picname, Vector2 speed) {
